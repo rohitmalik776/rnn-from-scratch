@@ -45,39 +45,6 @@ class RNN(Layer):
         
         return y_t
 
-
-    ## First iteration of my calculations
-    # Update weights:
-    # Whh, Whx, Wyh
-    #
-    # x is xt: input at time step t
-    # y is yt: expected output at time step t
-    # a is yhat: output of neural network at this point
-    # def update(self, x, y, a):
-    #     dya = y-a
-    #     # dWyh = (y-a).(ht)'
-    #     dWyh = np.dot((dya), self.h.T)
-
-    #     # dby = y-a
-    #     dby = dya
-
-    #     # dWhh = (Wyh)'.(y-a).(ht-1)'
-    #     dWhh = np.dot(np.dot(self.Wyh.T, (dya)), self.h_t1.T)
-
-    #     # dWhx = (Wyh)'.(y-a).(xt)'
-    #     dWhx = np.dot(np.dot(self.Wyh.T, (dya)), x.T)
-
-    #     # dbh = (Wyh)'.(y-a)
-    #     dbh = np.dot(self.Wyh.T, dya)
-
-    #     # Updation
-    #     self.Wyh = self.Wyh - self.lr * dWyh
-    #     self.Whh = self.Whh - self.lr * dWhh
-    #     self.Whx = self.Whx - self.lr * dWhx
-
-    #     self.by = self.by - self.lr * dby
-    #     self.bh = self.bh - self.lr * dbh
-
     def update(self, x, a, up_grad, batch_size):
         # dL / dZ
         dZ = np.multiply(up_grad, 1 - np.square(a))
