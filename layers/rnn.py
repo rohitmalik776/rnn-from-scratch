@@ -45,7 +45,7 @@ class RNN(Layer):
         
         return y_t
 
-    def update(self, x, a, up_grad, batch_size):
+    def find_grads(self, x, a, up_grad, batch_size):
         # dL / dZ
         dZ = np.multiply(up_grad, 1 - np.square(a))
         dWoh = np.dot(dZ, self.h.T)
@@ -57,7 +57,11 @@ class RNN(Layer):
 
         dbh = np.dot(self.Woh.T, dZ)
 
-        
+        down_grad = np.dot(np.dot(self.Whx.T, self.Woh.T), dZ)
+
+        return dWoh, dWhh, dWhx, dbo, dbh, down_grad
+
+    def update(self, dWoh, dWhh, dWhx, dbo, dbh):
         # Updation
         self.Woh = self.Woh - self.lr * dWoh
         self.Whh = self.Whh - self.lr * dWhh
@@ -65,7 +69,3 @@ class RNN(Layer):
 
         self.bo = self.bo - self.lr * dbo
         self.bh = self.bh - self.lr * dbh
-
-        # Downstream grad
-        down_grad = np.dot(np.dot(self.Whx.T, self.Woh.T), dZ)
-        return down_grad

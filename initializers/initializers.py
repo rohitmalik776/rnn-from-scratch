@@ -11,5 +11,6 @@ def he_init(shape):
     return weights
 
 def random_init(shape):
-    weights = np.random.rand(shape[0], shape[1]) - 0.5
+    weights = np.random.uniform(-0.4, 0.4, size=shape)
+    # weights = np.random.rand(shape[0], shape[1]) - 0.5
     return weights
